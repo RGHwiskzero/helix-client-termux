@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+client_config.json
+client.crt
+client.key
+*.tmp
+tests/tmp*/
