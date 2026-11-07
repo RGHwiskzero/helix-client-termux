@@ -13,15 +13,23 @@ target="$app_dir/launch-client.sh"
 printf 'Installing Termux packages...\n'
 pkg install -y python openssl openssl-tool tmux
 mkdir -p -- "$HOME/.local/bin"
-if [[ -e $launcher || -L $launcher ]]; then
+if [[ -L $launcher ]]; then
     if [[ $(readlink -f -- "$launcher") != "$target" ]]; then
         printf 'A different hlx-client launcher already exists: %s\n' "$launcher" >&2
         exit 1
     fi
-else
-    ln -s -- "$target" "$launcher"
+    rm -- "$launcher"
+elif [[ -e $launcher ]] && ! grep -Fqx '# Managed by Helix Termux install.sh' "$launcher"; then
+    printf 'A different hlx-client launcher already exists: %s\n' "$launcher" >&2
+    exit 1
 fi
-chmod +x -- "$target"
+printf -v target_quoted '%q' "$target"
+{
+    printf '#!%s/bin/bash\n' "$PREFIX"
+    printf '%s\n' '# Managed by Helix Termux install.sh'
+    printf 'exec %q %s "$@"\n' "$PREFIX/bin/bash" "$target_quoted"
+} > "$launcher"
+chmod 700 -- "$launcher"
 export PATH="$HOME/.local/bin:$PATH"
 
 bashrc="$HOME/.bashrc"

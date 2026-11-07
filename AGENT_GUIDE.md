@@ -8,7 +8,7 @@ The Debian host remains the controller. The Termux client listens for discovery 
 
 ## Files and launch
 
-- `install.sh` installs Termux packages `python`, `openssl`, `openssl-tool`, and `tmux`, creates a `hlx-client` symlink, and adds a guarded interactive Bash hook. The hook skips remote Helix shells via `HELIX_REMOTE_SHELL=1`.
+- `install.sh` installs Termux packages `python`, `openssl`, `openssl-tool`, and `tmux`, creates a managed `hlx-client` wrapper outside the clone, and adds a guarded interactive Bash hook. The hook skips remote Helix shells via `HELIX_REMOTE_SHELL=1`. The installer must not `chmod` files inside the clone; that makes Git treat browser-uploaded scripts as local modifications on Termux.
 - `launch-client.sh` attaches to or creates the single tmux session named `helix-client`. It uses the source directory resolved from its symlink. `quit` ends the Python client; Ctrl+B then D only detaches.
 - `helix_client_termux.py` implements local setup, authentication, discovery, TLS listener, terminal frames, and the local command prompt.
 - `termux_pty_worker.py` is a separate process because `pty.fork()` must not be called in the multithreaded listener. It relays raw bytes between pipes and a Bash PTY.
