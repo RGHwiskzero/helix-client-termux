@@ -12,7 +12,7 @@ pkg install -y git && git clone https://github.com/RGHwiskzero/helix-client-term
 
 To install from files copied to the phone instead, run `bash install.sh` inside this folder.
 
-The installer uses Termux's `pkg` to install Python, OpenSSL, and tmux. It creates `~/.local/bin/hlx-client`, adds an idempotent interactive Bash startup hook to `~/.bashrc`, and starts the client. Keep the installed folder in place: the launcher points to it. Re-running the installer is safe for the same folder, but it refuses to replace an unrelated `hlx-client` launcher.
+The installer uses Termux's `pkg` to install Python, the OpenSSL library and command-line tool (`openssl-tool`), and tmux. It creates `~/.local/bin/hlx-client`, adds an idempotent interactive Bash startup hook to `~/.bashrc`, and starts the client. Keep the installed folder in place: the launcher points to it. Re-running the installer is safe for the same folder, but it refuses to replace an unrelated `hlx-client` launcher.
 
 On first launch, enter a device name and the current shared Helix password. The program creates a unique client ID, authentication key, and TLS certificate on the phone. **No password, key, certificate, or device identity belongs in the public repository.** The private files are stored under `~/.config/helix-client-termux/`. On later launches, enter the local client password. The client stays open in a tmux session; opening Termux again attaches to it. If Android stopped the process, opening Termux starts it again and asks for the password.
 

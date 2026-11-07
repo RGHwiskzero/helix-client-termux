@@ -11,7 +11,7 @@ launcher="$HOME/.local/bin/hlx-client"
 target="$app_dir/launch-client.sh"
 
 printf 'Installing Termux packages...\n'
-pkg install -y python openssl tmux
+pkg install -y python openssl openssl-tool tmux
 mkdir -p -- "$HOME/.local/bin"
 if [[ -e $launcher || -L $launcher ]]; then
     if [[ $(readlink -f -- "$launcher") != "$target" ]]; then

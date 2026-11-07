@@ -13,6 +13,7 @@ import json
 import os
 from pathlib import Path
 import secrets
+import shutil
 import socket
 import ssl
 import subprocess
@@ -55,6 +56,8 @@ def certificate_fingerprint() -> str:
 
 def create_certificate(identity: str) -> str:
     """Generate a per-device TLS identity with Termux's OpenSSL package."""
+    if shutil.which("openssl") is None:
+        raise RuntimeError("OpenSSL command missing. Run: pkg install -y openssl-tool")
     try:
         subprocess.run([
             "openssl", "req", "-x509", "-newkey", "rsa:2048", "-sha256",
